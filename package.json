@@ -1,6 +1,6 @@
 {
   "name": "token-extractor",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Bearer token extractor for Node.js",
   "main": "./lib/index.js",
   "devDependencies": {
