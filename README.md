@@ -2,6 +2,8 @@
 
 Extracts `access_token` from a HTTP request header `Authorization: Bearer <access_token>`
 
+[![npm version](https://badge.fury.io/js/token-extractor.svg)](https://badge.fury.io/js/token-extractor)
+
 ## Install
 
 ```
