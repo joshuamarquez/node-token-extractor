@@ -4,28 +4,26 @@ const assert = require('assert');
 const tokenExtractor = require('../lib/index');
 
 describe('token-extractor', function() {
+  let token = new Buffer('sometoken').toString('base64');
 
-  describe('Passing tests', function() {
-
-    const secretKey = 'shhhh!';
+  describe('Work tests', function() {
     const req = {};
 
-    it('should set "req.token" correctly', function(done) {
-      let tokenString = 'sometokenbase64';
-
+    it('should extract token from authorization header', function(done) {
       req.headers = {
-        authorization: 'Bearer ' + tokenString
+        authorization: 'Bearer ' + token
       };
 
-      tokenExtractor(req, function(err, token) {
-        assert.equal(tokenString, token);
+      tokenExtractor(req, function(err, extractedToken) {
+        assert.ifError(err);
+        assert.equal(token, extractedToken);
 
         done();
       });
     });
   });
 
-  describe('failing tests', function() {
+  describe('Failure tests', function() {
     const req = {};
 
     it('should throw if second argument is not a function', function() {
@@ -49,15 +47,13 @@ describe('token-extractor', function() {
     });
 
     it('should return Error if authorization header format is invalid', function(done) {
-      let token = 'sometokenbase64';
-
       req.headers = {
         authorization: 'Bearer' + token
       };
 
       tokenExtractor(req, function(err) {
         assert.ok(err);
-        assert.equal(err.code, 'E_INVALID_AUTHORIZATION_FORMAT');
+        assert.equal(err.code, 'E_AUTHORIZATION_INVALID_FORMAT');
 
         done();
       });
